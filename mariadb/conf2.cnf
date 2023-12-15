@@ -1,0 +1,6 @@
+[mysql]
+user=root
+pid-file=/run/mysql/mysqld.pid
+datadir=/var/lib/mysql
+port=3306
+skip-networking=0

@@ -36,8 +36,6 @@ services:
     volumes:
       - wordpress_data:/var/www/html
       - ./requirements/nginx/config/nginx.conf:/etc/nginx/config/nginx.conf
-      - ./requirements/nginx/mycert.crt:/etc/nginx/ssl/certificate.crt
-      - ./requirements/nginx/mykey.key:/etc/nginx/ssl/private.key
     ports:
       - "443:443"
     networks:

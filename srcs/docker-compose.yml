@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  wordpress:
+    build: requirements/wordpress/
+    container_name: wordpress
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - wordpress_data:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - app-network
+    depends_on:
+      - mariadb
+
+  mariadb:
+    build: requirements/mariadb/
+    container_name: mariadb
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  nginx:
+    build: requirements/nginx/
+    container_name: nginx
+    restart: always
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./requirements/nginx/config/nginx.conf:/etc/nginx/config/nginx.conf
+      - ./requirements/nginx/mycert.crt:/etc/nginx/ssl/certificate.crt
+      - ./requirements/nginx/mykey.key:/etc/nginx/ssl/private.key
+    ports:
+      - "443:443"
+    networks:
+      - app-network
+    depends_on:
+      - wordpress
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  wordpress_data:
+  db_data:

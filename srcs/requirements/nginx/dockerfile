@@ -1,0 +1,20 @@
+FROM alpine:3.12
+
+RUN apk update && apk upgrade && apk add openssl nginx curl vim sudo
+
+RUN mkdir -p /run/nginx
+
+COPY ./config/nginx.conf /etc/nginx/nginx.conf
+COPY ./scripts/setup_nginx.sh /setup_nginx.sh
+
+RUN mkdir -p /etc/nginx/ssl && \
+    openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
+    -out /etc/nginx/ssl/certificate.crt \
+    -keyout /etc/nginx/ssl/private.key \
+    -subj "/C=CH/ST=Lausanne/L=Lausanne/O=42/OU=ndiamant/CN=ndiamant/"
+
+RUN chmod +x /setup_nginx.sh
+
+EXPOSE 443
+
+ENTRYPOINT ["sh", "setup_nginx.sh"]

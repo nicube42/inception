@@ -1,20 +1,20 @@
 up:
-	docker-compose up -d
+	cd ./srcs && docker-compose up -d
 
 down:
-	docker-compose down
+	cd ./srcs && docker-compose down
 
 rebuild:
-	docker-compose up -d --build
+	cd ./srcs && docker-compose up -d --build
 
 wp-shell:
-	docker exec -it wordpress /bin/sh
+	cd ./srcs && docker exec -it wordpress /bin/sh
 
 db-shell:
-	docker exec -it mariadb /bin/sh
+	cd ./srcs docker exec -it mariadb /bin/sh
 
 nginx-shell:
-	docker exec -it nginx /bin/sh
+	cd ./srcs docker exec -it nginx /bin/sh
 
 reset-all:
 	docker stop mariadb
@@ -25,3 +25,10 @@ reset-all:
 	docker rm wordpress
 	docker system prune -af --volumes
 	docker system prune -af --volumes
+
+reset-docker:
+	docker stop $(docker ps -a -q) || true
+	docker rm $(docker ps -a -q) || true
+	docker rmi $(docker images -q) || true
+	docker volume prune --force
+	docker volume rm srcs_db_data srcs_wordpress_data

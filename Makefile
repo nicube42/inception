@@ -1,4 +1,7 @@
 up:
+	sudo mkdir -p /home/user0/data
+	sudo mkdir -p /home/user0/data/wordpress
+	sudo mkdir -p /home/user0/data/db_data
 	cd ./srcs && docker-compose up -d
 
 down:
@@ -8,13 +11,13 @@ rebuild:
 	cd ./srcs && docker-compose up -d --build
 
 wp-shell:
-	cd ./srcs && docker exec -it wordpress /bin/sh
+	docker exec -it wordpress /bin/sh
 
 db-shell:
-	cd ./srcs docker exec -it mariadb /bin/sh
+	docker exec -it mariadb /bin/sh
 
 nginx-shell:
-	cd ./srcs docker exec -it nginx /bin/sh
+	docker exec -it nginx /bin/sh
 
 reset-all:
 	docker stop mariadb

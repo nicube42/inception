@@ -8,7 +8,7 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - wordpress_data:/var/www/html
+        - wordpress_data:/var/www/html
     env_file:
       - .env
     networks:
@@ -24,6 +24,7 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+      - ./requirements/mariadb/my.cnf:/etc/my.cnf
     env_file:
       - .env
     networks:
@@ -49,4 +50,14 @@ networks:
 
 volumes:
   wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/user0/data/wordpress
   db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/user0/data/db_data

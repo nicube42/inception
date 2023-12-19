@@ -1,24 +1,24 @@
-FROM alpine:3.12
+FROM alpine:3.18
 
 RUN apk add --no-cache \
-	php7 \
-	php7-fpm \
-	php7-mysqli \
-	php7-json \
-	php7-openssl \
-	php7-curl \
-	php7-zlib \
-	php7-xml \
-	php7-phar \
-	php7-intl \
-	php7-dom \
-	php7-xmlreader \
-	php7-ctype \
-	php7-mbstring \
-	php7-gd \
+	php \
+	php81-fpm \
+	php-mysqli \
+	php-json \
+	php-openssl \
+	php-curl \
+	php-zlib \
+	php-xml \
+	php-phar \
+	php-intl \
+	php-dom \
+	php-xmlreader \
+	php-ctype \
+	php-mbstring \
+	php-gd \
 	curl
 
-RUN addgroup -S www-data && adduser -S -G www-data www-data
+RUN addgroup -S www-data || true && adduser -S -G www-data www-data || true
 
 WORKDIR /var/www/html
 

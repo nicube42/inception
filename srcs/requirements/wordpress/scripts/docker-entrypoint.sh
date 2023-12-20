@@ -11,7 +11,7 @@ sleep 10
 if ! wp core is-installed --path=/var/www/html --quiet; then
     echo "Installing WordPress..."
     wp core install \
-        --url="https://localhost" \
+        --url="https://ndiamant.42.fr" \
         --title="Inception" \
         --admin_user="user0" \
         --admin_password="user0" \

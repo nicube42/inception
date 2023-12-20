@@ -5,8 +5,8 @@ RUN apk add --no-cache mariadb mariadb-client
 RUN mkdir -p /var/run/mysqld && chown mysql:mysql /var/run/mysqld
 RUN mkdir -p /docker-entrypoint-initdb.d
 
-COPY conf/conf.cnf /etc/my.cnf.d/conf.cnf
-COPY conf/conf.cnf /etc/my.cnf
+COPY config/conf.cnf /etc/my.cnf.d/conf.cnf
+COPY config/conf.cnf /etc/my.cnf
 RUN rm /etc/my.cnf.d/mariadb-server.cnf && mv /etc/my.cnf.d/conf.cnf /etc/my.cnf.d/mariadb-server.cnf
 
 COPY scripts/entrypoint.sh /usr/local/bin/

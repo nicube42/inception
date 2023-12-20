@@ -24,7 +24,6 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./requirements/mariadb/my.cnf:/etc/my.cnf
     env_file:
       - .env
     networks:

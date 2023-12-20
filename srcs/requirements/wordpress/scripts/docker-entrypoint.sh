@@ -6,12 +6,12 @@ sed -i "s/localhost/$DB_HOST/g" wp-config-sample.php
 sed -i "s/database_name_here/$DB_NAME/g" wp-config-sample.php
 cp wp-config-sample.php wp-config.php
 
-sleep 1
+sleep 10
 
 if ! wp core is-installed --path=/var/www/html --quiet; then
     echo "Installing WordPress..."
     wp core install \
-        --url="Inception" \
+        --url="https://localhost" \
         --title="Inception" \
         --admin_user="user0" \
         --admin_password="user0" \
@@ -19,5 +19,10 @@ if ! wp core is-installed --path=/var/www/html --quiet; then
         --path=/var/www/html \
         --skip-email
 fi
+
+chown -R www-data:www-data wp-content/uploads
+wp plugin install wordpress-importer --activate
+wp import /usr/local/bin/inception.xml --authors=create
+wp theme install twentytwentytwo --activate
 
 exec php-fpm81 -F

@@ -16,7 +16,6 @@ RUN apk add --no-cache \
 	php-ctype \
 	php-mbstring \
 	php-gd \
-	mariadb-client \
 	curl
 
 RUN addgroup -S www-data || true && adduser -S -G www-data www-data || true
@@ -33,6 +32,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && mv wp-cli.phar /usr/local/bin/wp
 
 COPY config/php-fpm.conf /etc/php81/php-fpm.d/www.conf
+COPY config/inception.xml /usr/local/bin/inception.xml
 COPY scripts/docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
